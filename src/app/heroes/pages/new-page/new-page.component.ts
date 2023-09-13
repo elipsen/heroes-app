@@ -88,8 +88,13 @@ export class NewPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
+      if ( !result ) return;
+
+      this.heroService.deleteHeroById(result)
+        .subscribe( result => {
+          this.showSnackbar(`${this.currentHero.superhero} deleted!`);
+          this.router.navigateByUrl('/heroes');
+        });
     });
   }
 

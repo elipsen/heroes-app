@@ -4,5 +4,6 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No, gracias</button>
-  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Ok</button>
+  <span class="spacer"></span>
+  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial color="primary">Ok</button>
 </div>

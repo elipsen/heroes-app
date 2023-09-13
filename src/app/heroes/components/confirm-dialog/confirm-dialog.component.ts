@@ -10,6 +10,7 @@ import { Hero } from '../../interfaces/hero.interface';
 })
 export class ConfirmDialogComponent {
 
+  // Estas inyecciones son propias para los dialogos de Angular Material
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Hero,
