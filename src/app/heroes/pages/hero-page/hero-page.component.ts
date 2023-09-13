@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HeroesService } from '../../services/heroes.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, delay} from 'rxjs';
+import { Hero } from '../../interfaces/hero.interface';
 
 @Component({
   selector: 'app-hero-page',
@@ -6,6 +10,24 @@ import { Component } from '@angular/core';
   styles: [
   ]
 })
-export class HeroPageComponent {
+export class HeroPageComponent implements OnInit {
 
+  public hero?: Hero;
+
+  constructor ( private heroService: HeroesService, private activatedRoute: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.params.pipe(
+      delay(3000),
+      switchMap( ({ id }) => this.heroService.getHeroById(id)) // Esto cambiara el resultado del observable al hacer el subscribe, cambiando el params por un hero
+    ).subscribe( hero => {
+      if (!hero) return this.router.navigateByUrl('heroes/list');
+      this.hero = hero;
+      return;
+    });
+  }
+
+  goBack(): void {
+    this.router.navigateByUrl('heroes/list');
+  }
 }
