@@ -1,15 +1,29 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivateFn } from '@angular/router';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
+import { AuthGuardCanActivate, AuthGuardCanMatch } from './auth/guards/auth.guard';
+import { PublicGuardCanActivate, PublicGuardCanMatch } from './auth/guards/public.guard';
 
 // localhost:4200
 const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ) // Lazy loading
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ), // Lazy loading
+    canActivate: [
+      PublicGuardCanActivate
+    ],
+    canMatch: [
+      PublicGuardCanMatch
+    ]
   }, {
     path: 'heroes',
-    loadChildren: () => import('./heroes/heroes.module').then( m => m.HeroesModule ) // Lazy loading
+    loadChildren: () => import('./heroes/heroes.module').then( m => m.HeroesModule ), // Lazy loading
+    canActivate: [
+      AuthGuardCanActivate
+    ],
+    canMatch: [
+      AuthGuardCanMatch
+    ]
   }, {
     path: '404',
     component: Error404PageComponent

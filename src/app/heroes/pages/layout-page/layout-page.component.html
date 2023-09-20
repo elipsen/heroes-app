@@ -20,11 +20,14 @@
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <span class="spacer">
-          <button mat-button>
-            Logout
-          </button>
-        </span>
+
+        <span class="spacer"></span>
+
+        <small>{{user?.email}}</small>
+
+        <button mat-button (click)="onLogout()">
+          Logout
+        </button>
     </mat-toolbar>
 
     <div class="container p-2">
